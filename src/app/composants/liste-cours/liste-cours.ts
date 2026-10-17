@@ -1,31 +1,38 @@
+
 import { Component, Output, EventEmitter } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { UpperCasePipe } from '@angular/common';
+
 @Component({
-  imports: [],
   selector: 'app-liste-cours',
+  standalone: true,
+  imports: [FormsModule, UpperCasePipe],
   styleUrl: './liste-cours.css',
   templateUrl: './liste-cours.html',
 })
 export class ListeCoursComponent {
-cours: Cours[] = [
-{ titre: 'Angular avancé', categorie: 'Front-end', duree: '12h', places: 8 },
-{ titre: 'TypeScript pour développeurs', categorie: 'Langage', duree: '8h',
-places: 15 },
-{ titre: 'API REST avec Node.js', categorie: 'Back-end', duree: '16h', places: 6
-},
-{ titre: 'Git et travail collaboratif', categorie: 'Outils', duree: '4h',
-places: 20 },
-];
-@Output() coursSelectionne = new EventEmitter<Cours>();
-coursActif: Cours | null = null;
-selectionner(c: Cours) {
-this.coursActif = c;
-this.coursSelectionne.emit(c);
-}
-}
-export interface Cours {
-titre: string;
-categorie: string;
-duree: string;
-places: number;
+  cours: Cours[] = [
+    { titre: 'Angular avancé', categorie: 'Front-end', duree: '12h', places: 8 },
+    { titre: 'TypeScript pour développeurs', categorie: 'Langage', duree: '8h', places: 15 },
+    { titre: 'API REST avec Node.js', categorie: 'Back-end', duree: '16h', places: 6 },
+    { titre: 'Git et travail collaboratif', categorie: 'Outils', duree: '4h', places: 20 },
+  ];
+
+  @Output() coursSelectionne = new EventEmitter<Cours>();
+
+  coursActif: Cours | null = null;
+  recherche = '';
+  tri: 'asc' | 'desc' = 'asc';
+
+  selectionner(c: Cours) {
+    this.coursActif = c;
+    this.coursSelectionne.emit(c);
+  }
 }
 
+export interface Cours {
+  titre: string;
+  categorie: string;
+  duree: string;
+  places: number;
+}
